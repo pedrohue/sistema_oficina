@@ -41,8 +41,13 @@ app.put('/clientes/:id', async (req, res) => {
 
     //atualiza o banco de dados
     await pool.query('UPDATE clientes SET nome = $1, telefone = $2 WHERE id = $3', [nome, telefone, id])
-
     res.send("Cliente atualizado com sucesso!")
+})
+
+app.delete('/clientes/:id', async (req, res) =>{
+    const {id} = req.params
+    await pool.query('DELETE from clientes WHERE id = $1', [id])
+    res.send("Cliente deletado com sucesso!")
 })
 
 
