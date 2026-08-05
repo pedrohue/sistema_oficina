@@ -24,4 +24,14 @@ router.post('/veiculos', async (req, res) => {
     res.send('veiculo cadastrado com sucesso!')
 })
 
+//rota para listar os veiculos
+router.get('/veiculos', async (req,res) => {
+
+    const resultados = await pool.query('SELECT * FROM veiculos')
+    res.json(resultados.rows)
+})
+
+// rota para deletar veiculos
+
+
 module.exports = router
