@@ -4,6 +4,9 @@ const express = require('express')
 // importa as rotas de clientes
 const clientesRoutes = require('./routes/clientes')
 
+//importa os veiculos
+const veiculosRoutes = require('./routes/veiculos')
+
 //cria o servidor
 const app = express()
 
@@ -12,6 +15,9 @@ app.use(express.json())
 
 //usa a rota de clientes
 app.use(clientesRoutes)
+
+//usa a rota de veiculos
+app.use(veiculosRoutes)
 
 //crinado as rotas
 app.get('/', (req,res) => {
