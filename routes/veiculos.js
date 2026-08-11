@@ -32,6 +32,11 @@ router.get('/veiculos', async (req,res) => {
 })
 
 // rota para deletar veiculos
+router.delete('/veiculos/:id',async (req,res)=>{
 
+    const {id} = req.params
+    await pool.query('DELETE FROM veiculos WHERE id = $1',[id])
+    res.send('veiculo deletado com sucesso!')
+})
 
 module.exports = router
