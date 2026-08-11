@@ -39,4 +39,13 @@ router.delete('/veiculos/:id',async (req,res)=>{
     res.send('veiculo deletado com sucesso!')
 })
 
+//rota para atualizar veiculos
+router.put('/veiculos/:id' ,async (req,res) => {
+   const {id} = req.params
+   await pool.query('UPDATE veiculos SET cliente_id = $1, marca = $2, modelo = $3, placa = $4, ano = $5 WHERE id = $6'
+    , [req.body.cliente_id, req.body.marca, req.body.modelo, req.body.placa, req.body.ano, id]) 
+    res.send('veiculo atualizado com sucesso!')
+})
+    
+
 module.exports = router
