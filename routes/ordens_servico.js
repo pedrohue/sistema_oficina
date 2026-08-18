@@ -21,4 +21,10 @@ router.post('/ordens_servico', async (req,res) => {
         res.send('ordem de serviço foi cadastrada com sucesso!')
     })
 
+    //rota para listar as ordens de serviço
+    router.get('/ordens_servico', async (req,res) => {
+     const resultados = await pool.query("SELECT * FROM ordens_servico")
+    res.json(resultados.rows)
+  })
+
     module.exports = router
