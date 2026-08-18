@@ -27,4 +27,19 @@ router.post('/ordens_servico', async (req,res) => {
     res.json(resultados.rows)
   })
 
+   //rota para atualizar as ordens de serviço
+   router.put ('/ordens_servico/:id', async (req,res)=> {
+    const {id} = req.params
+    const { cliente_id, veiculo_id, descricao, status, valor } = req.body
+    await pool.query('UPDATE ordens_servico SET cliente_id = $1, veiculo_id = $2, descricao = $3, status = $4, valor = $5 WHERE id = $6', [cliente_id, veiculo_id, descricao, status, valor, id])
+    res.send('ordem de serviço foi atualizada com sucesso!')
+   })
+
+    //rota para deletar as ordens de serviço
+    router.delete('/ordens_servico/:id',async (req,res)=>{
+     const{id}= req.params
+     await pool.query('DELETE FROM ordens_servico WHERE id = $1',[id])
+     res.send('ordem de serviço foi deletada com sucesso!')
+    })
+
     module.exports = router
