@@ -65,12 +65,22 @@ router.delete('/clientes/:id', async (req, res) =>{
 
     try {
     const {id} = req.params
-    await pool.query('DELETE from clientes WHERE id = $1', [id])
-    res.send("Cliente deletado com sucesso!")
+    const resultado = await pool.query('DELETE from clientes WHERE id = $1', [id])
+   if (resultado.rowCount ===0){
+    res.status(404).send('cliente nao foi encontrado')
+   } else {
+     res.send("Cliente deletado com sucesso!")
+   }
+   
     } catch (erro){
         console.error(erro)
+        if (erro.code === "23503"){
+        res.status(500).send('nao é possivel deletar o cliente pois tem um veiculo atribuido a ele')
+    } else {
         res.status(500).send('erro ao deletar o cliente')
     }
+}
+
 })
 
 module.exports = router
