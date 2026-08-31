@@ -15,6 +15,10 @@ router.post('/clientes', async (req, res) => {
 
         // pega as informações enviadas pelo Postman
         const { nome, telefone } = req.body
+        // validar o nome e o telefone
+        if (!nome || !telefone) {
+            return res.status(400).send('nome e telefone são obrigatorios')
+        }
         // salva o cliente no banco de dados
         await pool.query(
             'INSERT INTO clientes (nome, telefone) VALUES ($1, $2)',
@@ -52,8 +56,14 @@ router.put('/clientes/:id', async (req, res) => {
     const {nome, telefone} = req.body
 
     //atualiza o banco de dados
-    await pool.query('UPDATE clientes SET nome = $1, telefone = $2 WHERE id = $3', [nome, telefone, id])
+   const resultado = await pool.query('UPDATE clientes SET nome = $1, telefone = $2 WHERE id = $3', [nome, telefone, id])
+    
+   if(resultado.rowCount === 0){
+    res.status(404).send('cliente nao foi encontrado')
+   } else {
     res.send("Cliente atualizado com sucesso!")
+   }
+   
 } catch (erro) {
     console.error(erro)
         res.status(500).send('erro ao atualizar o cliente')
