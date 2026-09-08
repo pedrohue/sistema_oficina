@@ -14,14 +14,23 @@ const pool = require('../database')
 //rota para cadastrar os veiculos
 router.post('/veiculos', async (req, res) => {
 
-    // pega as informaçoes enviadas pelo postman
-    const { cliente_id, marca, modelo, placa, ano } = req.body
+    try {
+        // pega as informaçoes enviadas pelo postman
+        const { cliente_id, marca, modelo, placa, ano } = req.body
+
+        if (!cliente_id || !marca || !modelo || !placa || !ano) {
+            return res.status(400).json({ error: 'todos os campos são obrigatorios' })
+        }
 
     //salva no banco de dados
     await pool.query('INSERT INTO veiculos (cliente_id, marca, modelo, placa, ano) VALUES ($1, $2, $3, $4, $5)', [cliente_id, marca, modelo, placa, ano])
 
-    //resposta da api
-    res.send('veiculo cadastrado com sucesso!')
+        //resposta da api
+        res.send('veiculo cadastrado com sucesso!')
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "erro ao cadastrar veiculo" })
+    }
 })
 
 //rota para listar os veiculos
