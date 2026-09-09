@@ -29,30 +29,52 @@ router.post('/ordens_servico', async (req,res) => {
     }
     })
 
-   
-
     //rota para listar as ordens de serviço
+   
     router.get('/ordens_servico', async (req,res) => {
+     try { 
      const resultados = await pool.query("SELECT * FROM ordens_servico")
     res.json(resultados.rows)
-  })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('erro ao buscar ordem de serviço')
+    }
+ })
 
    //rota para atualizar as ordens de serviço
    router.put ('/ordens_servico/:id', async (req,res)=> {
-    //aqui ele vai pegar o id que vai ser atualizado
+    try  {
     const {id} = req.params
-    //aqui ele vai pegar os dados que irao ser atualizados
     const { cliente_id, veiculo_id, descricao, status, valor } = req.body
-    await pool.query('UPDATE ordens_servico SET cliente_id = $1, veiculo_id = $2, descricao = $3, status = $4, valor = $5 WHERE id = $6', [cliente_id, veiculo_id, descricao, status, valor, id])
-    res.send('ordem de serviço foi atualizada com sucesso!')
+
+   const resultado =  await pool.query('UPDATE ordens_servico SET cliente_id = $1, veiculo_id = $2, descricao = $3, status = $4, valor = $5 WHERE id = $6', [cliente_id, veiculo_id, descricao, status, valor, id])
+
+    if (resultado.rowCount === 0) {
+        return res.status(404).send('ordem de serviço nao encontrada')
+    } else{
+    res.send('ordem de serviço foi atualizada com sucesso!')}
+    }catch (error) {
+        console.error(error)
+        res.status(500).send('erro ao atualizar ordem.')
+      }
    })
 
     //rota para deletar as ordens de serviço
     router.delete('/ordens_servico/:id',async (req,res)=>{
+        try{
      const{id}= req.params
      //deletar a ordem de serviço do banco de dados através do id representado como[id]
-     await pool.query('DELETE FROM ordens_servico WHERE id = $1',[id])
-     res.send('ordem de serviço foi deletada com sucesso!')
+    const resultado =  await pool.query('DELETE FROM ordens_servico WHERE id = $1',[id])
+     if (resultado.rowCount === 0){
+        res.status(404).send('ordem de serviço nao foi encontrada')
+      } else{
+            res.send('ordem de serviço foi deletada com sucesso!')
+        } 
+    }catch (error){
+        console.error(error)
+        res.status(500).send('erro ao deletar ordem de serviço')
+    }
+      
     })
 
     module.exports = router
