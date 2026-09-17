@@ -35,25 +35,49 @@ router.post('/veiculos', async (req, res) => {
 
 //rota para listar os veiculos
 router.get('/veiculos', async (req,res) => {
-
-    const resultados = await pool.query('SELECT * FROM veiculos')
+try {
+     const resultados = await pool.query('SELECT * FROM veiculos')
     res.json(resultados.rows)
+} catch (error) {
+    console.error(error)
+    res.status(500).send('erro ao buscar veiculos')
+}
+   
 })
 
 // rota para deletar veiculos
 router.delete('/veiculos/:id',async (req,res)=>{
-
-    const {id} = req.params
-    await pool.query('DELETE FROM veiculos WHERE id = $1',[id])
-    res.send('veiculo deletado com sucesso!')
+ try {
+     const {id} = req.params
+    const resultado = await pool.query('DELETE FROM veiculos WHERE id = $1',[id])
+    if (resultado.rowCount === 0) {
+        res.status(404).send('veiculo nao encontrado')
+    } else {
+     res.send('veiculo deletado com sucesso!')
+    }
+ } catch (error) {
+    console.error(error)
+    res.status(500).send("erro ao deletar veiculo")
+ }
+   
 })
 
 //rota para atualizar veiculos
 router.put('/veiculos/:id' ,async (req,res) => {
-   const {id} = req.params
-   await pool.query('UPDATE veiculos SET cliente_id = $1, marca = $2, modelo = $3, placa = $4, ano = $5 WHERE id = $6'
-    , [req.body.cliente_id, req.body.marca, req.body.modelo, req.body.placa, req.body.ano, id]) 
+    try{
+        const {id} = req.params
+   const resultado = await pool.query('UPDATE veiculos SET cliente_id = $1, marca = $2, modelo = $3, placa = $4, ano = $5 WHERE id = $6'  , [req.body.cliente_id, req.body.marca, req.body.modelo, req.body.placa, req.body.ano, id]) 
+   if (resultado.rowCount === 0) {
+    res.status(404).send('veiculo nao encontrado')
+ } else {
     res.send('veiculo atualizado com sucesso!')
+ }
+   
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('erro ao atualizar veiculo')
+    }
+   
 })
     
 
