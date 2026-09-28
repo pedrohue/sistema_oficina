@@ -1,0 +1,20 @@
+* [33ma6d8318[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m pequenas alteraçoes e correçao de bugs
+* [33m038619e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m apenas tratamento de erro e melhorias no codigo
+*   [33mcdf6043[m Merge branch 'main' of https://github.com/pedrohue/sistema_oficina
+[32m|[m[33m\[m  
+[32m|[m * [33m4ad5703[m Update README.md
+* [33m|[m [33mcbff203[m começei as melhorias do backend, dessa vez adicionei o try e o catch para captaçao de erros
+[33m|[m[33m/[m  
+* [33mbf0e272[m adicionado pequenos comentarios para auxilio de leitura do codigo
+* [33m8c8535b[m adicionada a rota de atualizaçao e rota de deletar, ambas funcionando perfietamente
+*   [33m100b5b5[m Merge branch 'main' of https://github.com/pedrohue/sistema_oficina
+[34m|[m[35m\[m  
+[34m|[m * [33mfafdf74[m Update README with testing note
+* [35m|[m [33m0465b6a[m adicionei a rota get para listar as ordens de serviço
+[35m|[m[35m/[m  
+* [33mdd309cb[m finalizei o crud de veiculos e agora começei a parte de ordens de serviço
+* [33mb241de1[m atualizaçao de veiculos lançada
+* [33m06bd381[m adicionando rota para atualizar veiculos
+* [33m4781952[m rota para listar veiculos foi adicionada
+*   [33mae141a7[m Merge branch 'main' of https://github.com/pedrohue/sistema_oficina
+[36m|[m[1;31m\[m  
