@@ -80,5 +80,4 @@ router.put('/veiculos/:id' ,async (req,res) => {
    
 })
     
-
 module.exports = router
