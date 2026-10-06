@@ -13,10 +13,13 @@ const ordensServicosRoutes = require('./routes/ordens_servico')
 //cria o servidor
 const app = express()
 
+const cors = require('cors')
+app.use(cors())
+
 //vai fazer com que a api entenda o JSON
 app.use(express.json())
 
-//usa a rota de clientes
+//usa a rota de clientes 
 app.use(clientesRoutes)
 
 //usa a rota de veiculos
